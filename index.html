@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青森観光ガイド - あおもりの魅力を発見しよう</title>
+    <meta name="description" content="青森県の美しい自然と文化を体験できる観光案内サービス。弘前城、奥入瀬渓流、ねぶた祭りなど青森の魅力をご案内します。">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #a8d5a8;
+            --light-green: #e8f5e8;
+            --dark-green: #7cb97c;
+            --text-dark: #2d4a2d;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-green);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--dark-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(168, 213, 168, 0.8), rgba(168, 213, 168, 0.8)),
+                        url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1600&h=900&fit=crop') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-button:hover {
+            background-color: var(--text-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        /* Attractions */
+        .attractions {
+            background-color: var(--light-green);
+        }
+
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .attraction-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .attraction-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .card-content p {
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-item {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--light-green);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--light-green);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        /* Contact */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--light-green);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--primary-green);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--dark-green);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            width: 100%;
+            background-color: var(--dark-green);
+            color: var(--white);
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: var(--text-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-green);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-green);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--primary-green);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .attractions-grid,
+            .services-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus styles */
+        a:focus,
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid var(--dark-green);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">青森観光ガイド</div>
+            <ul class="nav-links">
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#attractions">観光スポット</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#testimonials">お客様の声</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>青森の魅力を発見しよう</h1>
+                <p>美しい自然と豊かな文化が織りなす青森県の魅力を、地元ガイドがご案内します</p>
+                <a href="#contact" class="cta-button">今すぐ相談する</a>
+            </div>
+        </section>
+
+        <section id="attractions" class="attractions">
+            <div class="container">
+                <h2 class="section-title">人気の観光スポット</h2>
+                <div class="attractions-grid">
+                    <article class="attraction-card">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-qWjq15l8uMzLR3SuGwBLpdextqX747.png" alt="青空の下に佇む弘前城">
+                        <div class="card-content">
+                            <h3>弘前城</h3>
+                            <p>日本三大桜名所の一つ。春には約2,600本の桜が咲き誇り、幻想的な美しさを演出します。</p>
+                        </div>
+                    </article>
+                    <article class="attraction-card">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-8lHP01LWnXuZjMujJgiOq6RvSGehKQ.png" alt="緑豊かな奥入瀬渓流の清流">
+                        <div class="card-content">
+                            <h3>奥入瀬渓流</h3>
+                            <p>十和田湖から流れ出る美しい渓流。四季折々の自然美が楽しめる散策コースです。</p>
+                        </div>
+                    </article>
+                    <article class="attraction-card">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SV0QQeFcTUaQTdKL65q3lXB4Jv8t23.png" alt="青森ねぶた祭の色鮮やかな灯籠">
+                        <div class="card-content">
+                            <h3>ねぶた祭り</h3>
+                            <p>青森の夏を彩る伝統的な祭り。巨大な灯籠と太鼓の音が織りなす迫力ある祭典です。</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">私たちのサービス</h2>
+                <div class="services-grid">
+                    <div class="service-item">
+                        <div class="service-icon">🗺️</div>
+                        <h3>カスタムツアー</h3>
+                        <p>お客様のご希望に合わせたオリジナルツアーをプランニングいたします。</p>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">👥</div>
+                        <h3>地元ガイド</h3>
+                        <p>青森生まれ青森育ちのガイドが、地元ならではの魅力をお伝えします。</p>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">🚗</div>
+                        <h3>送迎サービス</h3>
+                        <p>快適な移動をサポート。安全で便利な送迎サービスをご提供します。</p>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-icon">🍎</div>
+                        <h3>グルメ体験</h3>
+                        <p>青森の美味しい食材を使った料理体験や、地元レストランをご案内します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2 class="section-title">お客様の声</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial">
+                        <p class="testimonial-text">「地元ガイドさんのおかげで、ガイドブックには載っていない素晴らしい場所を発見できました。青森の自然の美しさに感動しました。」</p>
+                        <p class="testimonial-author">- 加藤様（東京都）</p>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">「ねぶた祭りの体験ツアーは最高でした！地元の方々との交流も楽しく、青森の文化を深く理解できました。」</p>
+                        <p class="testimonial-author">- 佐藤様（大阪府）</p>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">「りんご狩り体験と地元料理のツアーが素晴らしかったです。家族全員で楽しい思い出を作ることができました。」</p>
+                        <p class="testimonial-author">- 山田様（神奈川県）</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">お問い合わせ</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">お名前 <span class="sr-only">必須</span></label>
+                        <input type="text" id="name" name="name" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">メールアドレス <span class="sr-only">必須</span></label>
+                        <input type="email" id="email" name="email" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">電話番号</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">お問い合わせ内容 <span class="sr-only">必須</span></label>
+                        <textarea id="message" name="message" required aria-required="true" placeholder="ご希望のツアー内容や質問などをお聞かせください"></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">送信する</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>青森観光ガイド</h3>
+                    <p>青森県の美しい自然と文化をお客様にお届けする観光案内サービスです。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>お問い合わせ</h3>
+                    <p>電話: 017-123-4567</p>
+                    <p>メール: info@aomori-guide.jp</p>
+                    <p>営業時間: 9:00-18:00</p>
+                </div>
+                <div class="footer-section">
+                    <h3>アクセス</h3>
+                    <p>〒030-0000</p>
+                    <p>青森県青森市中央1-1-1</p>
+                    <p>青森駅より徒歩5分</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 青森観光ガイド. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
